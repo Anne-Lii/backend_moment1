@@ -22,7 +22,7 @@ res.render("about");
 });
 
 
-//kör igång applikationen
+//kör igång applikationen i vald port
 app.listen(port, () => {
 console.log("server öppen på " + port)
 });
