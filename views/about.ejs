@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+    
     <title>Om sidan</title>
 </head>
 <body>
@@ -13,20 +17,24 @@
             <nav>
                 <ul>
                     <li><a href="/">Kurser</a></li>
-                    <li><a href="/addcourse">Lägg till kurser</a></li>
+                    <li><a href="/addcourse">Lägg till kurs</a></li>
                     <li><a href="/about" class="active">Om sidan</a></li>
                 </ul>
             </nav>
         </div>
     </header>
-    <div class="courseContainer">
+    <div class="courseContainer" id="container_about">
         <main>
             <h2>Om sidan</h2>
             <p>Detta är en webbapplikation där användaren kan lägga till kurser som användaren har läst via ett formulär.
-                Kurserna lagras i en Postgre relationsdatabas som ligger hos Render. 
+                Kurserna lagras i en relationsdatabas.
                 Varje kurs har information som kursnamn, kurskod, kursplan och progression. Det finns även en länk för att radera varje enskild kurs.
-                
+                <br> <br>
                 All kod är skriven i Visual Studio Code och i projektet har nodeJS och express använts. 
+                Jag valde postgre som databas-server. Jag använder render.com som är en molntjänstbaserad tjänst för hosting av min databas.
+                Som vanligt är det syntaxen som är svår, men jag uppskattar verkligen hur lite kod det är att skriva med express.
+                I det stora hela har det gått bra och detta var en väldigt rolig uppgift. 
+                Jag har sett fram emot att få lära mig hur man kopplar ihop en databas med en webbplats.
             </p>
           
         </main>
