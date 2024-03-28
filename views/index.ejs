@@ -9,7 +9,7 @@
 <body>
     <header>
         <div class="navContainer">
-            <h1>Mina kurser</h1>
+            <h1>Mitt CV - kurser</h1>
             <nav>
                 <ul>
                     <li><a href="/" class="active">Kurser</a></li>
@@ -24,21 +24,6 @@
         <main>
             <h2>Mina kurser</h2>
                 <a href="/addcourse" id="add">Lägg till ny kurs</a>
-
-            <% if(myCoursesArr.length > 0) { %> 
-               <% myCoursesArr.forEach((course)=> { %>
-                <article>
-                    <h3><%= course.name %></h3>
-                    <p>
-                        Kurskod: <%= course.code %><br>
-                        Syllabus: <%= course.syllabus %><br>
-                        Progression: <%= course.progression %><br>
-                    </p>
-                </article>
-                <% }); %>
-                <% } else { %>
-                <p>Inga registrerade kurser </p>
-            <% }; %>
         </main>
     </div>
     <footer>

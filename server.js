@@ -1,59 +1,60 @@
 //Anne-Lii Hansen 
 
-const express = require("express"); //inkludera express
-const app = express();//denna variabeln startar upp applikationen
-const port = process.env.port | 3000;//tilldela en port
-const bodyParser = require("body-parser");//kunna ta emot data från formulär
+const {Client} = require("pg");                     //inkludera postgre
+const express = require("express");                 //inkludera express
+require("dotenv").config();                         //inkludera dotenv filen
+const app = express();                              //denna variabeln startar upp applikationen
 
-app.set("view engine", "ejs"); //view engine satt till ejs
-app.use(express.static("public")); //för att kunna använda statiska filer. Läggs i mappen public
-app.use(bodyParser.urlencoded({ extended: true}));//
+app.set("view engine", "ejs");                      //view engine satt till ejs
+app.use(express.static("public"));                  //för att kunna använda statiska filer. Läggs i mappen public
+app.use(express.urlencoded({ extended: true}));     //för att kunna läsa in från formuläret
+
+
+//anslutnings inställningar från env filen
+const client = new Client({
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE,
+    ssl:{
+        rejectUnauthorized: false,
+    },
+});
+
+//ansluter till databasen
+client.connect((err) => {
+    if (err) {
+        console.log("Fel vid anslutning" + err);
+    } else {
+        console.log("Ansluten till databasen...");
+    }
+});
+
 
 //Routing - skriver ut sökvägarna, returnerar vy
-app.get("/", (req, res) => {
-    const myCoursesArr = [
-        { 
-            id: "1",
-            code: "DT057G",
-            name: "Webbutveckling 1", 
-            syllabus: "https://www.miun.se/utbildning/kursplaner-och-utbildningsplaner/DT057G/",
-            progression: "A"
-        },
-        { 
-            id: "2",
-            code: "DT084G",
-            name: "Introduktion till programmering i JavaScript", 
-            syllabus: "https://www.miun.se/utbildning/kursplaner-och-utbildningsplaner/DT084G/",
-            progression: "A"
-        },
-        { 
-            id: "3",
-            code: "DT200G",
-            name: "Grafisk teknik för webb", 
-            syllabus: "https://www.miun.se/utbildning/kursplaner-och-utbildningsplaner/DT200G/",
-            progression: "A"
-        }
-    ];
-
-    res.render("index", {
-        myCoursesArr
-    });//här visas startsidan och array med objekt skickas med
+app.get("/", async(req, res) => {
+    res.render("index");//här visas startsidan 
 });
+
+
 
 app.get("/addcourse", (req, res) => {
 res.render("addcourse");//här visas addcourse sidan
 });
 
-app.post("/addcourse", (req, res) => {
-res.render("addcourse");
+//tar emot post från formuläret och skickar till index-sidan
+app.post("/addcourse", async(req, res) => {
+
 });
+
     
 app.get("/about", (req, res) => {
 res.render("about");//här visas about sidan
 });
 
 
-//kör igång applikationen i vald port
-app.listen(port, () => {
-console.log("server öppen på " + port)
+//kör igång applikationen i vald port från env-filen
+app.listen(process.env.PORT, () => {
+console.log("Server öppen på port " + process.env.PORT)
 });

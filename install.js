@@ -1,7 +1,7 @@
 const {Client} = require("pg");     //inkludera postgre
 require("dotenv").config();         //inkludera dotenv filen
 
-//ansluta till databasen
+//anslutnings inställningar från env filen
 const client = new Client({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -13,6 +13,7 @@ const client = new Client({
     },
 });
 
+//ansluter till databasen
 client.connect((err) => {
     if (err) {
         console.log("Fel vid anslutning" + err);
@@ -20,3 +21,16 @@ client.connect((err) => {
         console.log("Du är ansluten till din databas!");
     }
 });
+
+//skapa en tabell
+client.query(`
+DROP TABLE IF EXISTS courses;
+CREATE TABLE courses(
+id              SERIAL PRIMARY KEY,
+coursecode      VARCHAR(7) NOT NULL,
+coursename      VARCHAR(100) NOT NULL,
+syllabus        VARCHAR(200),
+progression     VARCHAR(1) NOT NULL,
+created         TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+`);
