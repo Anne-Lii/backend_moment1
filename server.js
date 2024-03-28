@@ -34,7 +34,17 @@ client.connect((err) => {
 
 //Routing - skriver ut sökvägarna, returnerar vy
 app.get("/", async(req, res) => {
-    res.render("index");//här visas startsidan 
+
+    //plocka ut kurserna från databasen
+    client.query("SELECT * FROM courses ORDER BY created DESC", (err, result) => {
+        if (err) {
+         console.log("fel vid SQL-fråga");   
+        } else {
+            res.render("index", {
+                courses: result.rows    //alla sparade rader i databasen sparas i variabeln courses
+            });
+        }
+    });
 });
 
 app.get("/addcourse", (req, res) => {
@@ -43,20 +53,19 @@ res.render("addcourse");//här visas addcourse sidan
 
 //tar emot post från formuläret och skickar till index-sidan
 app.post("/addcourse", async(req, res) => {
+
+    //input från formuläret sparade i variabler
     const inputcode = req.body.code;
     const inputname = req.body.name;
     const inputsyllabus = req.body.syllabus;
     const inputprogression = req.body.progression;
 
-    console.log("Input Code:", inputcode);
-    console.log("Input Name:", inputname);
-    console.log("Input Syllabus:", inputsyllabus);
-    console.log("Input Progression:", inputprogression);
-    
     //SQL-fråga
     const result = await client.query("INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES ($1, $2, $3, $4)", 
     [inputcode, inputname, inputsyllabus, inputprogression]
     );
+
+    res.redirect("/"); //här hamnar man efter input skickats till databasen (redirect istället för render för att undvika dubbla inlägg)
 });
 
 app.get("/about", (req, res) => {

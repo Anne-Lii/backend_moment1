@@ -23,7 +23,19 @@
     <div class="courseContainer">
         <main>
             <h2>Mina kurser</h2>
-                <a href="/addcourse" id="add">Lägg till ny kurs</a>
+                <a href="/addcourse" id="add">Lägg till ny kurs</a> <!-- länk till sidan för att lägga till kurser -->
+
+                <!-- skapar en ul lista med li element som innehåller input från formuläret -->
+                <ul>
+                    <% courses.forEach((course) => { %>
+                        <li>
+                           <span class="listrubrik"> Kursnamn:</span> <span class="listp"><%= course.coursename %></span><br>
+                            <span class="listrubrik">Kurskod:</span> <span class="listp"><%= course.coursecode %></span><br>
+                            <span class="listrubrik">URL:</span> <span class="listp"><a href="<%= course.syllabus %>"><%= course.syllabus %></a></span><br>
+                            <span class="listrubrik">Progression:</span> <span class="listp"><%= course.progression %></span><br>
+                        </li>
+                        <% }) %>
+                </ul>
         </main>
     </div>
     <footer>
