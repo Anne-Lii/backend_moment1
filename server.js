@@ -37,22 +37,31 @@ app.get("/", async(req, res) => {
     res.render("index");//här visas startsidan 
 });
 
-
-
 app.get("/addcourse", (req, res) => {
 res.render("addcourse");//här visas addcourse sidan
 });
 
 //tar emot post från formuläret och skickar till index-sidan
 app.post("/addcourse", async(req, res) => {
+    const inputcode = req.body.code;
+    const inputname = req.body.name;
+    const inputsyllabus = req.body.syllabus;
+    const inputprogression = req.body.progression;
 
+    console.log("Input Code:", inputcode);
+    console.log("Input Name:", inputname);
+    console.log("Input Syllabus:", inputsyllabus);
+    console.log("Input Progression:", inputprogression);
+    
+    //SQL-fråga
+    const result = await client.query("INSERT INTO courses(coursecode, coursename, syllabus, progression) VALUES ($1, $2, $3, $4)", 
+    [inputcode, inputname, inputsyllabus, inputprogression]
+    );
 });
 
-    
 app.get("/about", (req, res) => {
 res.render("about");//här visas about sidan
 });
-
 
 //kör igång applikationen i vald port från env-filen
 app.listen(process.env.PORT, () => {
