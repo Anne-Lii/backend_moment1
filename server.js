@@ -54,6 +54,10 @@ res.render("addcourse");//här visas addcourse sidan
 //tar emot post från formuläret och skickar till index-sidan
 app.post("/addcourse", async(req, res) => {
 
+    //kontroll av eventuellt tomma  isåfall skickas felmeddelande
+    if (!req.body.name || !req.body.code || !req.body.syllabus || !req.body.progression)
+    return res.send('<script> alert("Alla fält måste fyllas i"); window.location="/addcourse";</script>'); //returnerar ett felmedelande
+
     //input från formuläret sparade i variabler
     const inputcode = req.body.code;
     const inputname = req.body.name;
