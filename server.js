@@ -72,6 +72,18 @@ app.get("/about", (req, res) => {
 res.render("about");//här visas about sidan
 });
 
+//radera kurser
+app.get("/deletecourse/:id", async (req, res) => {
+    const courseid = req.params.id;
+
+    try {
+        await client.query("DELETE FROM courses WHERE ID = $1", [courseid]); //query för att radera specifikt id
+        res.redirect("/"); //tillbaka till startsidan
+    } catch (error) {
+        console.log("Det gick inte att radera kursen");
+    }
+});
+
 //kör igång applikationen i vald port från env-filen
 app.listen(process.env.PORT, () => {
 console.log("Server öppen på port " + process.env.PORT)
