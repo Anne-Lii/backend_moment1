@@ -6,7 +6,7 @@ require("dotenv").config();                         //inkludera dotenv filen
 const app = express();                              //denna variabeln startar upp applikationen
 
 app.set("view engine", "ejs");                      //view engine satt till ejs
-app.use('/css', express.static(__dirname + '/public/css'));                  //för att kunna använda statiska filer. Läggs i mappen public
+app.use(express.static("public"));                  //för att kunna använda statiska filer. Läggs i mappen public
 app.use(express.urlencoded({ extended: true}));     //för att kunna läsa in från formuläret
 
 
